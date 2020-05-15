@@ -15,11 +15,13 @@ function NavBar() {
                     My Bookshelf
                 </NavLink>
 
-                <NavLink to="/Search" className="nav-link">
-                    Search
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <NavLink to="/Search" className="nav-link">
+                            Search
                 </NavLink>
-                <span>Search</span>
-
+                    </li>
+                </ul>
             </nav>
         </div>
     );
