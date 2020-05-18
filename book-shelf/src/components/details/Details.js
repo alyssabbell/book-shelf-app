@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { CookieContext } from "../../contexts/SessionContext.js";
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+import { Redirect } from "react-router-dom";
+// import { createBrowserHistory } from 'history';
+// const history = createBrowserHistory();
 
 
 function Detail(props) {
@@ -13,7 +15,6 @@ function Detail(props) {
     // this corresponds with the key (wantToRead, currentlyReading, read)
     const [newShelfOpt, setNewShelfOpt] = useState("");
     const keys = ["wantToRead", "currentlyReading", "read"];
-    let history = useHistory();
 
     const bookId = props.computedMatch.params.id;
 
@@ -82,7 +83,9 @@ function Detail(props) {
                     <div>
                         <select onChange={(e) => {
                             setNewShelfOpt(e.target.value);
-                            history.push("/Bookshelf");
+                            // I want to push to Bookshelf but this isn't working
+                            // history.push("/Bookshelf");
+                            return <Redirect to="/Bookshelf" />
                         }} name="SelectOption">
                             <option selected>Select an option</option>
                             {

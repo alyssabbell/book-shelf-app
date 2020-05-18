@@ -21,7 +21,7 @@ function Bookshelf({ history }) {
 
     // this seems silly but if I rerender the useEffect based on myShelf in state,
     // the rerender goes into a loop. This prevented the loop.
-    let currentShelf = myShelf;
+    //let currentShelf = myShelf;
 
     useEffect(() => {
         axios(`http://localhost:7000/bookshelf`, {
@@ -39,7 +39,7 @@ function Bookshelf({ history }) {
             //.then(resp => handleShelf(resp.data.books))
             .then(resp => setMyShelf(Object.entries(resp.data.books)))
             .catch(error => console.log(error))
-    }, [currentShelf]);
+    }, [myShelf]);
 
 
     return (
