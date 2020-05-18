@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import App from "../App";
 import Search from "../components/search/Search.js";
 import Bookshelf from "../components/bookshelf/Bookshelf.js";
@@ -19,7 +19,6 @@ export const Routes = () => {
                 <ProtectedRoute path="/Search" component={Search} />
                 <ProtectedRoute path="/Bookshelf" component={Bookshelf} />
                 <ProtectedRoute path="/Details/:id" component={Details} />
-                {/* <ProtectedRoute exact path=" isUpperCaseTrue={true} roberto={Movies} /> */}
             </Switch>
         </CookieProvider>
     );

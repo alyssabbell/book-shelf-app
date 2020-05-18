@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { CookieContext } from "../../contexts/SessionContext.js";
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 
 function Detail(props) {
@@ -9,12 +10,12 @@ function Detail(props) {
     let options = ["Want to Read", "Currently Reading", "Read"];
     const [uuid] = useContext(CookieContext);
     const [currBook, setCurrBook] = useState({});
-
     // this corresponds with the key (wantToRead, currentlyReading, read)
     const [newShelfOpt, setNewShelfOpt] = useState("");
     const keys = ["wantToRead", "currentlyReading", "read"];
+    let history = useHistory();
 
-    const bookId = props.match.params.id;
+    const bookId = props.computedMatch.params.id;
 
     useEffect(() => {
 
@@ -49,18 +50,27 @@ function Detail(props) {
 
     }, [newShelfOpt]);
 
+
     return (
-        <>
-            <div>You've reached the Detail component.</div>
+        <div className="container mt-2 mb-5" id="stand-width">
             <h2>{currBook.title}</h2>
             <div className="media mb-3">
-                <img
-                    //src={book.imageLinks.smallThumbnail}
-                    alt={currBook.title}
-                    width="150"
-                    height="220.875"
-                    className="mr-3"
-                />
+                {currBook.imageLinks !== undefined &&
+                    (
+                        <img
+                            src={`${currBook.imageLinks.smallThumbnail}`}
+                            alt={currBook.title}
+                            width="150"
+                            height="220.875"
+                            className="mr-3"
+                        />
+                    )
+                }
+                {currBook.imageLinks === undefined &&
+                    (
+                        <div>No image available</div>
+                    )}
+
                 <div className="media-body">
                     <div className="h5" >Author(s):</div><span>{currBook.authors !== undefined && currBook.authors.map(author => {
                         return (<div>{author}</div>)
@@ -70,8 +80,11 @@ function Detail(props) {
                     <div className="h5" >Publish Date: </div><span> {currBook.publishedDate}</span>
                     <div className="h5" >Change shelf: </div>
                     <div>
-                        <select onChange={(e) => setNewShelfOpt(e.target.value)} name="SelectOption">
-                            <option disabled>Select an option</option>
+                        <select onChange={(e) => {
+                            setNewShelfOpt(e.target.value);
+                            history.push("/Bookshelf");
+                        }} name="SelectOption">
+                            <option selected>Select an option</option>
                             {
                                 options.map((label, idx) => {
                                     return <option value={keys[idx]} key={label + idx}>{label}</option>;
@@ -81,8 +94,7 @@ function Detail(props) {
                     </div>
                 </div>
             </div>
-
-        </>
+        </div>
     );
 
 };

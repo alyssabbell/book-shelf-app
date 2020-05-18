@@ -9,6 +9,19 @@ function Bookshelf({ history }) {
     const [myShelf, setMyShelf] = useState([]);
 
     let options = ["Want to Read", "Currently Reading", "Read"];
+    // might be best to store this in a context (or regular js file) and import it for
+    // the components with dropdowns. set up as....
+    /*
+    {
+        wantToRead: "Want To Read",
+        currentlyReading: "Currently Reading",
+        read: "Read"
+    }
+    */
+
+    // this seems silly but if I rerender the useEffect based on myShelf in state,
+    // the rerender goes into a loop. This prevented the loop.
+    let currentShelf = myShelf;
 
     useEffect(() => {
         axios(`http://localhost:7000/bookshelf`, {
@@ -26,11 +39,11 @@ function Bookshelf({ history }) {
             //.then(resp => handleShelf(resp.data.books))
             .then(resp => setMyShelf(Object.entries(resp.data.books)))
             .catch(error => console.log(error))
-    }, [myShelf]);
+    }, [currentShelf]);
 
 
     return (
-        <>
+        <div className="container mt-2 mb-5" id="stand-width">
             {myShelf.map(([key, books], index) => {
                 return (
                     <div>
@@ -44,105 +57,9 @@ function Bookshelf({ history }) {
 
                     </div>
                 )
-
-
-
-                // (function () {
-                //     if (books.length === 0) {
-                //         return <p>No books here!</p>
-                //     }
-                //     else {
-                //         books.map((book, idx) => {
-                //             return (
-                //                 <div>
-                //                     <BookInShelf book={book.id} key={key + idx} />
-                //                 </div>)
-                //         })
-                //     }
-                // })
-
-                // if (books.length === 0) {
-                //    return (<p>No books here!</p>)
-                // }
-                // else {
-                //     books.map((book, idx) => {
-                //         return (
-                //             <div>
-                //                 <BookInShelf book={book.id} key={key + idx} />
-                //             </div>)
-                //     })
-                // } // end of else
-
             })}
-            {/* {myShelf.map(([key, books]) => {
-                if (key === "wantToRead") {
-                    //return (<h3>Want To Read</h3>)
 
-                    if (books.length === 0) {
-                        return (<p>No books here!</p>)
-                    }
-                    else {
-                        books.map((book, idx) => {
-                            return (
-                                <div>
-                                    <BookInShelf book={book.id} key={"wantToRead" + idx} />
-                                </div>)
-                        })
-                    }
-                }
-                // -------
-                if (key === "currentlyReading") {
-                    //return (<h3>Currently Reading</h3>)
-
-                    if (books.length === 0) {
-                        return (<p>No books here!</p>)
-                    }
-                    else {
-                        books.map((book, idx) => {
-                            return (
-                                <div>
-                                    <BookInShelf book={book.id} key={"currentlyReading" + idx} />
-                                </div>)
-                        })
-                    }
-                }
-                // ---------
-                if (key === "read") {
-                    // return (<h3>Read</h3>)
-
-                    if (books.length === 0) {
-                        return (<p>No books here!</p>)
-                    }
-                    else {
-                        books.map((book, idx) => {
-                            return (
-                                <div>
-                                    <BookInShelf book={book.id} key={"read" + idx} />
-                                </div>)
-                        })
-
-                    }
-                }
-            })} */}
-            {/* // Object.keys(handleShelf()).map(shelf => {
-                //     return (<div>{shelfOption[shelf]}</div>)
-                //     //console.log
-                // }) */}
-            {/* {myShelf.map(shelf => {
-                return (<h3>{shelf.header}</h3>)
-
-                if (shelf.books.length > 0) {
-                    shelf.books.map(book => {
-                        return (
-                            <div>
-                                <BookInShelf book={book} />
-                            </div>
-                        )
-                    })
-
-                }
-            })} */}
-        </>
+        </div>
     )
 };
 

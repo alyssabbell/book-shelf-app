@@ -2,9 +2,10 @@ import React, { useContext, Component } from "react";
 import { Route, Redirect } from "react-router-dom";
 import { CookieContext } from "../contexts/SessionContext";
 
+// renders a ProtectedRoute component and its props
 
 export const ProtectedRoute = ({
-    roberto: Batman, // Capitalizing because React requires components names to be capitalized
+    component: Component, // Capitalizing because React requires components names to be capitalized
     ...restOfPropsFromParent
 }) => {
 
@@ -18,7 +19,7 @@ export const ProtectedRoute = ({
             {...restOfPropsFromParent}
             render={propsFromRouter => {
                 return uuid ? (
-                    <Batman {...restOfPropsFromParent} />
+                    <Component {...restOfPropsFromParent} />
                 ) :
                     (
                         <Redirect

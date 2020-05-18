@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState } from 'react';
 import axios from 'axios';
 import { CookieContext } from "../../contexts/SessionContext.js";
-
+import nocover from "../../no-cover.png";
 
 const BookInShelf = (props) => {
 
@@ -10,8 +10,9 @@ const BookInShelf = (props) => {
     // this corresponds with the key (wantToRead, currentlyReading, read)
     const [newShelfOpt, setNewShelfOpt] = useState("");
 
-    const options = ["Want to Read", "Currently Reading", "Read"];
-    const keys = ["wantToRead", "currentlyReading", "read"];
+    const options = ["Want to Read", "Currently Reading", "Read", "Delete"];
+    const keys = ["wantToRead", "currentlyReading", "read", "none"];
+    // const [, setShelfChange] = useC();
 
     // retrieves the book from the Id that was passed in
     useEffect(() => {
@@ -27,7 +28,6 @@ const BookInShelf = (props) => {
         })
             // .then(resp => setStatus(resp.data.status))
             .then(resp => setCurrBook(resp.data.book))
-            //.then(resp => console.log(resp.data.book))
             .catch(error => console.log(error))
     }, []);
 
@@ -44,30 +44,47 @@ const BookInShelf = (props) => {
         })
             // .then(resp => setStatus(resp.data.status))
             //.then(resp => setCurrBook(resp.data.book))
-            //.then(() => console.log(newShelfOpt))
+            //  .then(() => props.setShelfChange(true))
+            .then(/* push to bookshelf or search */)
             .catch(error => console.log(error))
 
     }, [newShelfOpt]);
 
     return (
         <>
-            <div>You've reached a book inside the shelf.</div>
             <div className="media mb-3">
-                <img
-                    //src={book.imageLinks.smallThumbnail}
-                    alt={currBook.title}
-                    width="150"
-                    height="220.875"
-                    className="mr-3"
-                />
+                {currBook.imageLinks !== undefined &&
+                    (
+                        <img
+                            src={`${currBook.imageLinks.smallThumbnail}`}
+                            alt={currBook.title}
+                            width="150"
+                            height="220.875"
+                            className="mr-3"
+                        />
+                    )
+                }
+                {currBook.imageLinks === undefined &&
+                    (
+                        <img
+                            src={`${nocover}`}
+                            alt={currBook.title}
+                            width="150"
+                            height="220.875"
+                            className="mr-3"
+                        />
+                    )}
                 <div className="media-body">
                     <div className="h5" >{currBook.title} </div>
                     <div className="h6" >Change shelf: </div>
                     <div>
                         <select onChange={(e) => setNewShelfOpt(e.target.value)} name="SelectOption">
-                            <option disabled>Select an option</option>
+                            <option selected>Select an option</option>
                             {
                                 options.map((label, idx) => {
+                                    // if (label === props.key) {
+                                    //     // want to set dropdown option as selected where props.key === label
+                                    // }
                                     return <option value={keys[idx]} key={label + idx}>{label}</option>;
                                 })
                             }

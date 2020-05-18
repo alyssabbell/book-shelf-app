@@ -26,22 +26,18 @@ function App({ history }) {
       data: { username, password },
     })
       .then(response => {
-        //console.log(response);
         setUUID(response.data.uuid);
-        // console.log("App.js", { history });
         history.push("/Bookshelf");
       })
       .catch(error => {
         setHasError(true);
-        //console.log(error.response.data.message);
         setErrorMessage(error.response.data.message);
       })
   };
 
   return (
-    <div className="container mt-2 mb-5">
-      <h1>Login</h1>
-      <form className="form-inline mb-2" onSubmit={handleLogin}>
+    <div className="container mt-2 mb-5" id="stand-width">
+      <form className="mb-2" onSubmit={handleLogin}>
         <div className="form-group">
           <label htmlFor="username" className="mr-2">
             Username
@@ -68,7 +64,7 @@ function App({ history }) {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="submit" className="btn btn-primary" onClick={handleLogin}>
+        <button type="submit" className="btn btn-info" onClick={handleLogin}>
           Login
         </button>
 
