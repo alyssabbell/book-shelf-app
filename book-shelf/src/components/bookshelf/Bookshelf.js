@@ -10,6 +10,7 @@ function Bookshelf({ history }) {
     const [myShelf, setMyShelf] = useState([]);
     const options = ["Want to Read", "Currently Reading", "Read"];
     const [status, setStatus] = useState("");
+    const [error, setError] = useState("");
     let newShelf = [...myShelf];
 
     useEffect(() => {
@@ -19,19 +20,19 @@ function Bookshelf({ history }) {
                 "Content-Type": "application/json"
             },
             params: {
-                id: uuid // Passing to the token to the API here, where it is a parameter
+                id: uuid
             }
         })
             .then(resp => {
                 setMyShelf(Object.entries(resp.data.books));
                 setStatus(resp.statusText);
             })
-            .catch(error => console.log(error))
+            .catch(error => setError(error.message));
     }, [newShelf]);
 
 
     return (
-        <div className="container mt-2 mb-5" id="stand-width">
+        <div className="container mt-1 mb-5" id="stand-width">
             {status === "OK" && myShelf.map(([key, books], index) => {
                 return (
                     <div>
@@ -50,6 +51,12 @@ function Bookshelf({ history }) {
                     </div>
                 )
             })}
+
+            {error && (
+                <div className="alert alert-danger" role="alert">
+                    {error}
+                </div>
+            )}
         </div>
     )
 };

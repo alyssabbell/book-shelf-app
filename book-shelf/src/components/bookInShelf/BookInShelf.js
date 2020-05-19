@@ -12,6 +12,8 @@ const BookInShelf = (props) => {
     // this corresponds with the key (wantToRead, currentlyReading, read)
     const [newShelfOpt, setNewShelfOpt] = useState("");
     const [status, setStatus] = useState("");
+    const [loadBookError, setLoadBookError] = useState("");
+    const [changeBookError, setChangeBookError] = useState("");
     const options = ["Want to Read", "Currently Reading", "Read", "Delete"];
     const keys = ["wantToRead", "currentlyReading", "read", "none"];
     const link = "/Details/" + `${currBook.id}`;
@@ -29,12 +31,11 @@ const BookInShelf = (props) => {
                 id: uuid
             }
         })
-            // .then(resp => setStatus(resp.data.status))
             .then(resp => {
                 setCurrBook(resp.data.book);
                 setStatus(resp.statusText)
             })
-            .catch(error => console.log(error))
+            .catch(error => setLoadBookError(error.message))
     }, []);
 
     // adds book to shelf shelf when dropdown is changed
@@ -48,11 +49,8 @@ const BookInShelf = (props) => {
                 id: uuid
             }
         })
-            // .then(resp => setStatus(resp.data.status))
-            //.then(resp => setCurrBook(resp.data.book))
-            //  .then(() => props.setShelfChange(true))
-            .then(/* push to bookshelf or search */)
-            .catch(error => console.log(error))
+            .then()
+            .catch(error => setChangeBookError(error.message))
 
     }, [newShelfOpt]);
 
@@ -82,22 +80,31 @@ const BookInShelf = (props) => {
                             />
                         )}
                     <div className="media-body">
-                        <Link to={link}><a href="#" class="text-dark"><h5 className="h5" >{currBook.title} </h5></a></Link>
+                        <Link to={link}>
+                            <a href="#" class="text-dark"><h5 className="h5 book-title" >{currBook.title} </h5>
+                            </a></Link>
                         <div className="h6" >Change shelf: </div>
                         <div>
                             <select onChange={(e) => setNewShelfOpt(e.target.value)} name="SelectOption">
                                 <option selected>Select an option</option>
                                 {
                                     options.map((label, idx) => {
-                                        // if (label === props.key) {
-                                        //     // want to set dropdown option as selected where props.key === label
-                                        // }
                                         return <option value={keys[idx]} key={label + idx}>{label}</option>;
                                     })
                                 }
                             </select>
                         </div>
                     </div>
+                </div>
+            )}
+            {loadBookError && (
+                <div className="alert alert-danger" role="alert">
+                    Unable to load title
+                </div>
+            )}
+            {changeBookError && (
+                <div className="alert alert-danger" role="alert">
+                    Unable to load title
                 </div>
             )}
         </>

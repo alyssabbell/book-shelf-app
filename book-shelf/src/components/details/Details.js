@@ -8,12 +8,13 @@ function Detail(props) {
     console.log("props from details: ", props);
 
     let options = ["Want to Read", "Currently Reading", "Read"];
-    const [uuid] = useContext(CookieContext);
-    const [currBook, setCurrBook] = useState({});
+    const keys = ["wantToRead", "currentlyReading", "read"];
     // this corresponds with the key (wantToRead, currentlyReading, read)
     const [newShelfOpt, setNewShelfOpt] = useState("");
-    const keys = ["wantToRead", "currentlyReading", "read"];
+    const [uuid] = useContext(CookieContext);
+    const [currBook, setCurrBook] = useState({});
     const [status, setStatus] = useState("");
+    const [error, setError] = useState("");
 
     const bookId = props.computedMatch.params.id;
 
@@ -28,12 +29,11 @@ function Detail(props) {
                 id: uuid
             }
         })
-            // .then(resp => setStatus(resp.data.status))
             .then(resp => {
                 setCurrBook(resp.data.book);
                 setStatus(resp.statusText);
             })
-            .catch(error => console.log(error))
+            .catch(error => setError(error.message))
     }, []);
 
     useEffect(() => {
@@ -49,12 +49,11 @@ function Detail(props) {
             //.then(resp => setStatus(resp.data.status))
             //.then(resp => setCurrBook(resp.data.book))
             //.then(() => console.log(newShelfOpt))
-            .catch(error => console.log(error))
+            .then()
+            .catch(error => alert(error.message))
 
     }, [newShelfOpt]);
 
-
-    //console.log(currBook);
 
     return (
         <div className="container mt-2 mb-5" id="stand-width">
@@ -111,10 +110,9 @@ function Detail(props) {
                                 <div>
                                     <select onChange={(e) => {
                                         setNewShelfOpt(e.target.value);
-                                        // I want to push to Bookshelf but this isn't working
-                                        // history.push("/Bookshelf");
-                                        window.location.href = "/Bookshelf"
-                                    }} name="SelectOption">
+                                        window.location.href = "/Bookshelf";
+                                    }}
+                                        name="SelectOption">
                                         <option selected>Select an option</option>
                                         {
                                             options.map((label, idx) => {
@@ -127,6 +125,11 @@ function Detail(props) {
                         </div>
                     </div>
                 )}
+            {error && (
+                <div className="alert alert-danger" role="alert">
+                    {error}
+                </div>
+            )}
         </div>
     );
 
