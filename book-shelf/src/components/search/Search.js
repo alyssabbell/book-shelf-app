@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import Details from "../details/Details";
 import { Link } from "react-router-dom";
 import { CookieContext } from "../../contexts/SessionContext.js";
 import nocover from "../../no-cover.png";
@@ -11,7 +10,6 @@ function Search({ history }) {
     const [books, setBooks] = useState([]);
     const [status, setStatus] = useState("");
     const [uuid] = useContext(CookieContext);
-
 
     useEffect(() => {
 

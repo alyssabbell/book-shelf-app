@@ -1,9 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { CookieContext } from "../../contexts/SessionContext.js";
 import axios from 'axios';
-import { Redirect } from "react-router-dom";
-// import { createBrowserHistory } from 'history';
-// const history = createBrowserHistory();
+import nocover from "../../no-cover.png";
 
 
 function Detail(props) {
@@ -15,6 +13,7 @@ function Detail(props) {
     // this corresponds with the key (wantToRead, currentlyReading, read)
     const [newShelfOpt, setNewShelfOpt] = useState("");
     const keys = ["wantToRead", "currentlyReading", "read"];
+    const [status, setStatus] = useState("");
 
     const bookId = props.computedMatch.params.id;
 
@@ -30,7 +29,10 @@ function Detail(props) {
             }
         })
             // .then(resp => setStatus(resp.data.status))
-            .then(resp => setCurrBook(resp.data.book))
+            .then(resp => {
+                setCurrBook(resp.data.book);
+                setStatus(resp.statusText);
+            })
             .catch(error => console.log(error))
     }, []);
 
@@ -44,7 +46,7 @@ function Detail(props) {
                 id: uuid
             }
         })
-            // .then(resp => setStatus(resp.data.status))
+            //.then(resp => setStatus(resp.data.status))
             //.then(resp => setCurrBook(resp.data.book))
             //.then(() => console.log(newShelfOpt))
             .catch(error => console.log(error))
@@ -52,51 +54,79 @@ function Detail(props) {
     }, [newShelfOpt]);
 
 
+    //console.log(currBook);
+
     return (
         <div className="container mt-2 mb-5" id="stand-width">
-            <h2>{currBook.title}</h2>
-            <div className="media mb-3">
-                {currBook.imageLinks !== undefined &&
-                    (
-                        <img
-                            src={`${currBook.imageLinks.smallThumbnail}`}
-                            alt={currBook.title}
-                            width="150"
-                            height="220.875"
-                            className="mr-3"
-                        />
-                    )
-                }
-                {currBook.imageLinks === undefined &&
-                    (
-                        <div>No image available</div>
-                    )}
-
-                <div className="media-body">
-                    <div className="h5" >Author(s):</div><span>{currBook.authors !== undefined && currBook.authors.map(author => {
-                        return (<div>{author}</div>)
-                    })}</span>
-                    <div className="h5" >Description: </div><span> {currBook.description}</span>
-                    <div className="h5" >Publisher: </div><span> {currBook.publisher}</span>
-                    <div className="h5" >Publish Date: </div><span> {currBook.publishedDate}</span>
-                    <div className="h5" >Change shelf: </div>
+            {status === "OK" &&
+                (
                     <div>
-                        <select onChange={(e) => {
-                            setNewShelfOpt(e.target.value);
-                            // I want to push to Bookshelf but this isn't working
-                            // history.push("/Bookshelf");
-                            return <Redirect to="/Bookshelf" />
-                        }} name="SelectOption">
-                            <option selected>Select an option</option>
-                            {
-                                options.map((label, idx) => {
-                                    return <option value={keys[idx]} key={label + idx}>{label}</option>;
-                                })
+                        <h2>{currBook.title}</h2>
+                        <div className="media mb-3">
+                            {currBook.imageLinks &&
+                                (
+                                    <img
+                                        src={`${currBook.imageLinks.smallThumbnail}`}
+                                        alt={currBook.title}
+                                        width="150"
+                                        height="220.875"
+                                        className="mr-3"
+                                    />
+                                )
                             }
-                        </select>
+                            {currBook.imageLinks === undefined &&
+                                (
+                                    <img
+                                        src={`${nocover}`}
+                                        alt={currBook.title}
+                                        width="150"
+                                        height="220.875"
+                                        className="mr-3"
+                                    />
+                                )}
+
+                            <div className="media-body">
+                                <div className="h5" >Author(s):</div><span>{currBook.authors && currBook.authors.map((author, index) => {
+                                    return (<div key={index}>{author}</div>)
+                                })}</span>
+
+                                {currBook.description && (
+                                    <>
+                                        <div className="h5" >Description: </div><span> {currBook.description}</span>
+                                    </>
+                                )}
+
+                                {currBook.publisher && (
+                                    <>
+                                        <div className="h5" >Publisher: </div><span> {currBook.publisher}</span>
+                                    </>
+                                )}
+                                {currBook.publishedDate && (
+                                    <>
+                                        <div className="h5" >Publish Date: </div><span> {currBook.publishedDate}</span>
+                                    </>
+                                )}
+
+                                <div className="h5" >Change shelf: </div>
+                                <div>
+                                    <select onChange={(e) => {
+                                        setNewShelfOpt(e.target.value);
+                                        // I want to push to Bookshelf but this isn't working
+                                        // history.push("/Bookshelf");
+                                        window.location.href = "/Bookshelf"
+                                    }} name="SelectOption">
+                                        <option selected>Select an option</option>
+                                        {
+                                            options.map((label, idx) => {
+                                                return <option value={keys[idx]} key={label + idx}>{label}</option>;
+                                            })
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
+                )}
         </div>
     );
 

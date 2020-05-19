@@ -7,21 +7,9 @@ function Bookshelf({ history }) {
 
     const [uuid] = useContext(CookieContext);
     const [myShelf, setMyShelf] = useState([]);
-
-    let options = ["Want to Read", "Currently Reading", "Read"];
-    // might be best to store this in a context (or regular js file) and import it for
-    // the components with dropdowns. set up as....
-    /*
-    {
-        wantToRead: "Want To Read",
-        currentlyReading: "Currently Reading",
-        read: "Read"
-    }
-    */
-
-    // this seems silly but if I rerender the useEffect based on myShelf in state,
-    // the rerender goes into a loop. This prevented the loop.
-    //let currentShelf = myShelf;
+    const options = ["Want to Read", "Currently Reading", "Read"];
+    const [status, setStatus] = useState("");
+    let newShelf = [...myShelf];
 
     useEffect(() => {
         axios(`http://localhost:7000/bookshelf`, {
@@ -33,32 +21,32 @@ function Bookshelf({ history }) {
                 id: uuid // Passing to the token to the API here, where it is a parameter
             }
         })
-            //.then(resp => console.log(resp.data.books))
-            // .then(resp => setStatus(resp.data.status))
-
-            //.then(resp => handleShelf(resp.data.books))
-            .then(resp => setMyShelf(Object.entries(resp.data.books)))
+            .then(resp => {
+                setMyShelf(Object.entries(resp.data.books));
+                setStatus(resp.statusText);
+            })
             .catch(error => console.log(error))
-    }, [myShelf]);
+    }, [newShelf]);
 
 
     return (
         <div className="container mt-2 mb-5" id="stand-width">
-            {myShelf.map(([key, books], index) => {
+            {status === "OK" && myShelf.map(([key, books], index) => {
                 return (
-                    <div>
-                        <h3>{options[index]}</h3>
+                    <div className="border border-info">
+                        <h3 className="shelf-title">{options[index]}</h3>
+                        {books.length === 0 && (
+                            <div>No titles exist</div>
+                        )}
                         {books.map((book, idx) => {
                             return (
                                 <div>
                                     <BookInShelf book={book.id} key={key + idx} />
                                 </div>)
                         })}
-
                     </div>
                 )
             })}
-
         </div>
     )
 };

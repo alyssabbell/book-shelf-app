@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React from "react";
 import App from "../App";
 import Search from "../components/search/Search.js";
 import Bookshelf from "../components/bookshelf/Bookshelf.js";
@@ -10,7 +10,6 @@ import NavBar from "../components/navbar/NavBar";
 
 export const Routes = () => {
 
-    console.log();
     return (
         <CookieProvider>
             <NavBar />
