@@ -2,6 +2,7 @@ import React, { useEffect, useContext, useState } from 'react';
 import axios from 'axios';
 import { CookieContext } from "../../contexts/SessionContext.js";
 import BookInShelf from "../bookInShelf/BookInShelf.js";
+import "./bookshelf.css";
 
 function Bookshelf({ history }) {
 
@@ -33,17 +34,19 @@ function Bookshelf({ history }) {
         <div className="container mt-2 mb-5" id="stand-width">
             {status === "OK" && myShelf.map(([key, books], index) => {
                 return (
-                    <div className="border border-info">
+                    <div>
                         <h3 className="shelf-title">{options[index]}</h3>
-                        {books.length === 0 && (
-                            <div>No titles exist</div>
-                        )}
-                        {books.map((book, idx) => {
-                            return (
-                                <div>
-                                    <BookInShelf book={book.id} key={key + idx} />
-                                </div>)
-                        })}
+                        <div className="background-color">
+                            {books.length === 0 && (
+                                <div>No titles exist</div>
+                            )}
+                            {books.map((book, idx) => {
+                                return (
+                                    <div>
+                                        <BookInShelf book={book.id} key={key + idx} />
+                                    </div>)
+                            })}
+                        </div>
                     </div>
                 )
             })}
