@@ -33,11 +33,12 @@ const BookInShelf = (props) => {
         })
             .then(resp => {
                 setCurrBook(resp.data.book);
-                setStatus(resp.statusText)
+                setStatus(resp.statusText);
             })
             .catch(error => setLoadBookError(error.message))
-    }, []);
+    }, [newShelfOpt]);
 
+    //console.log(props.key);
     // adds book to shelf when dropdown is changed
     useEffect(() => {
         axios(`http://localhost:7000/bookshelf/${props.book}/${newShelfOpt}`, {

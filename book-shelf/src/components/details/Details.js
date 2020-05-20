@@ -60,8 +60,8 @@ function Detail(props) {
             {status === "OK" &&
                 (
                     <div>
-                        <h2>{currBook.title}</h2>
-                        <div className="media mb-3">
+                        <h2 className="book-title">{currBook.title}</h2>
+                        <div className="media mb-3 background-color">
                             {currBook.imageLinks &&
                                 (
                                     <img
@@ -85,28 +85,28 @@ function Detail(props) {
                                 )}
 
                             <div className="media-body">
-                                <div className="h5" >Author(s):</div><span>{currBook.authors && currBook.authors.map((author, index) => {
+                                <div className="h5 sub-info" >Author(s):</div><span>{currBook.authors && currBook.authors.map((author, index) => {
                                     return (<div key={index}>{author}</div>)
                                 })}</span>
 
                                 {currBook.description && (
                                     <>
-                                        <div className="h5" >Description: </div><span> {currBook.description}</span>
+                                        <div className="h5 mt-3 sub-info" >Description: </div><span> {currBook.description}</span>
                                     </>
                                 )}
 
                                 {currBook.publisher && (
                                     <>
-                                        <div className="h5" >Publisher: </div><span> {currBook.publisher}</span>
+                                        <div className="h5 mt-3 sub-info" >Publisher: </div><span> {currBook.publisher}</span>
                                     </>
                                 )}
                                 {currBook.publishedDate && (
                                     <>
-                                        <div className="h5" >Publish Date: </div><span> {currBook.publishedDate}</span>
+                                        <div className="h5 mt-3 sub-info" >Publish Date: </div><span> {currBook.publishedDate}</span>
                                     </>
                                 )}
 
-                                <div className="h5" >Change shelf: </div>
+                                <div className="h5 mt-3 sub-info" >Change shelf: </div>
                                 <div>
                                     <select onChange={(e) => {
                                         setNewShelfOpt(e.target.value);

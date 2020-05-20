@@ -40,3 +40,8 @@
 #stand-width {
   width: 55%;
 }
+
+.book-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 2rem;
+}

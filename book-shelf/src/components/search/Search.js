@@ -64,7 +64,7 @@ function Search({ history }) {
                                 )}
 
                             <div className="media-body">
-                                <h2 className="h4">
+                                <h2 className="h4 book-title">
                                     <Link to={link}><a href="#" class="text-dark">{book.title}</a></Link>
                                 </h2>
                                 {book.authors !== undefined && book.authors.map(author => {

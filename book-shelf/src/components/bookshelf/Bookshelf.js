@@ -11,8 +11,7 @@ function Bookshelf({ history }) {
     const options = ["Want to Read", "Currently Reading", "Read"];
     const [status, setStatus] = useState("");
     const [error, setError] = useState("");
-
-    let newShelf = [...myShelf];
+    const [shelfChanged, setShelfChanged] = useState("");
 
     useEffect(() => {
         axios(`http://localhost:7000/bookshelf`, {
@@ -29,12 +28,12 @@ function Bookshelf({ history }) {
                 setStatus(resp.statusText);
             })
             .catch(error => setError(error.message));
-    }, [newShelf]);
-
+    }, [myShelf]);
 
     return (
         <div className="container mt-1 mb-5" id="stand-width">
             {status === "OK" && myShelf.map(([key, books], index) => {
+
                 return (
                     <div>
                         <h3 className="shelf-title">{options[index]}</h3>
@@ -45,7 +44,7 @@ function Bookshelf({ history }) {
                             {books.map((book, idx) => {
                                 return (
                                     <div>
-                                        <BookInShelf book={book.id} key={key + idx} />
+                                        <BookInShelf book={book.id} key={key + idx} setShelfChanged={setShelfChanged} />
                                     </div>)
                             })}
                         </div>

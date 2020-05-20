@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { removeSessionCookie } from "../../utilities/CookieUtils.js";
+import "./navbar.css";
 
 function NavBar({ history }) {
 
@@ -11,9 +12,9 @@ function NavBar({ history }) {
 
     return (
         <div>
-            <nav className="navbar navbar-expand-lg navbar-dark bg-info mb-4">
-                <NavLink to="/Bookshelf" className="navbar-brand">
-                    My Bookshelf
+            <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+                <NavLink to="/Bookshelf" className="navbar-brand" id="title">
+                    Bookshelf
                 </NavLink>
 
                 <ul className="navbar-nav mr-auto">

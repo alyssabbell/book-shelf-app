@@ -1,0 +1,10 @@
+.navbar {
+        /* background-image: linear-gradient(to bottom right, rgb(173,247,266), rgb(212,244,241)); */
+         /* background-image: linear-gradient(to bottom right, rgb(0,198,159), rgb(0,212,144)); */
+/* background-image: rgb(10, 42, 46); */
+}       
+
+#title {
+        font-family: 'Oswald', sans-serif;
+        font-size:  2rem;
+}
