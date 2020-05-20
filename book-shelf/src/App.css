@@ -45,3 +45,9 @@
   font-family: 'Oswald', sans-serif;
   font-size: 2rem;
 }
+
+.book-shadow {
+  -webkit-box-shadow: 10px 10px 14px -2px rgba(0,0,0,0.17);
+  -moz-box-shadow: 10px 10px 14px -2px rgba(0,0,0,0.17);
+  box-shadow: 10px 10px 14px -2px rgba(0,0,0,0.17);
+}

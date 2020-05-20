@@ -66,7 +66,7 @@ const BookInShelf = (props) => {
                                 alt={currBook.title}
                                 width="150"
                                 height="220.875"
-                                className="mr-3"
+                                className="mr-3 book-shadow"
                             />
                         )
                     }

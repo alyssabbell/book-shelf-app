@@ -59,7 +59,7 @@ function Search({ history }) {
                                         alt={book.title}
                                         width="150"
                                         height="220.875"
-                                        className="mr-3"
+                                        className="mr-3 book-shadow"
                                     />
                                 )}
 
