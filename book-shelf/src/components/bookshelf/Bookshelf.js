@@ -11,6 +11,7 @@ function Bookshelf({ history }) {
     const options = ["Want to Read", "Currently Reading", "Read"];
     const [status, setStatus] = useState("");
     const [error, setError] = useState("");
+
     let newShelf = [...myShelf];
 
     useEffect(() => {

@@ -38,7 +38,7 @@ const BookInShelf = (props) => {
             .catch(error => setLoadBookError(error.message))
     }, []);
 
-    // adds book to shelf shelf when dropdown is changed
+    // adds book to shelf when dropdown is changed
     useEffect(() => {
         axios(`http://localhost:7000/bookshelf/${props.book}/${newShelfOpt}`, {
             method: "PUT",
