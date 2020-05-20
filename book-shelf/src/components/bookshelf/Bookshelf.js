@@ -44,7 +44,7 @@ function Bookshelf({ history }) {
                             {books.map((book, idx) => {
                                 return (
                                     <div>
-                                        <BookInShelf book={book.id} key={key + idx} />
+                                        <BookInShelf book={book.id} key={book.id} />
                                     </div>)
                             })}
                         </div>
