@@ -13,6 +13,8 @@ function NavBar({ history }) {
     return (
         <div>
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+                {/* <nav className="navbar navbar-expand-lg navbar-dark bg-white mb-4"> */}
+
                 <NavLink to="/Bookshelf" className="navbar-brand" id="title">
                     Bookshelf
                 </NavLink>
