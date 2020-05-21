@@ -33,7 +33,7 @@ function Bookshelf({ history }) {
     return (
         <div className="container mt-1 mb-5" id="stand-width">
             {status === "OK" && myShelf.map(([key, books], index) => {
-
+                const currentShelf = key;
                 return (
                     <div>
                         <h3 className="shelf-title">{options[index]}</h3>

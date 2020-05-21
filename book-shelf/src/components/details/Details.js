@@ -46,9 +46,6 @@ function Detail(props) {
                 id: uuid
             }
         })
-            //.then(resp => setStatus(resp.data.status))
-            //.then(resp => setCurrBook(resp.data.book))
-            //.then(() => console.log(newShelfOpt))
             .then()
             .catch(error => alert(error.message))
 

@@ -27,7 +27,7 @@ function Search({ history }) {
                 setStatus(resp.data.status);
                 console.log(books);
             })
-            .catch(error => setErrorMessage(error.message))
+            .catch(error => setErrorMessage("No results by that title."))
     }, [search]);
 
     console.log(uuid);
@@ -76,16 +76,10 @@ function Search({ history }) {
                     );
                 })}
 
-
-                {/* {errorMessage && (
-                    <div className="alert alert-danger" role="alert">
-                        {errorMessage}
-                            </div>
-                )} */}
             </div>
             {status === "complete" && books && books.length === 0 &&
                 (
-                    <div>No titles found that match that criteria.</div>
+                    <div>{errorMessage}</div>
                 )}
         </div>
     )

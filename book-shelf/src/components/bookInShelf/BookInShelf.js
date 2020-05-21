@@ -18,7 +18,6 @@ const BookInShelf = (props) => {
     const keys = ["wantToRead", "currentlyReading", "read", "none"];
     const link = "/Details/" + `${currBook.id}`;
 
-
     // retrieves the book from the Id that was passed in
     useEffect(() => {
 
@@ -38,7 +37,6 @@ const BookInShelf = (props) => {
             .catch(error => setLoadBookError(error.message))
     }, [newShelfOpt]);
 
-    //console.log(props.key);
     // adds book to shelf when dropdown is changed
     useEffect(() => {
         axios(`http://localhost:7000/bookshelf/${props.book}/${newShelfOpt}`, {
